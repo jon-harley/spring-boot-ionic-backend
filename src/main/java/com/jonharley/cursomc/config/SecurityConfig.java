@@ -26,13 +26,13 @@ import com.jonharley.cursomc.security.JWTUtil;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
-	
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
 	@Autowired
-	private Environment env;
+    private Environment env;
 	
 	@Autowired
 	private JWTUtil jwtUtil;
@@ -40,22 +40,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	private static final String[] PUBLIC_MATCHERS = {
 			"/h2-console/**"
 	};
-	
-	private static final String[] PUBLIC_MATCHERS_GET= {
+
+	private static final String[] PUBLIC_MATCHERS_GET = {
 			"/produtos/**",
 			"/categorias/**"
 	};
-	
-	private static final String[] PUBLIC_MATCHERS_POST= {
-			"/clientes/**"
+
+	private static final String[] PUBLIC_MATCHERS_POST = {
+			"/clientes/**",
+			"/auth/forgot/**"
 	};
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
-		if(Arrays.asList(env.getActiveProfiles()).contains("test")) {
-			http.headers().frameOptions().disable();
-		}
+		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
+            http.headers().frameOptions().disable();
+        }
 		
 		http.cors().and().csrf().disable();
 		http.authorizeRequests()
